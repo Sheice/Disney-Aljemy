@@ -6,7 +6,7 @@ import './models/Users.js'
 
 
 try {
-    await sequelize.sync({force: true})
+    await sequelize.sync({force: false})
     console.log('Connection has been established successfully.');
     app.listen(app.get('PORT'));
 
