@@ -1,9 +1,12 @@
 import app from "./app.js";
 import { sequelize } from "./db/db.js";
 
+// import models
+import './models/Users.js'
+
 
 try {
-    await sequelize.authenticate();
+    await sequelize.sync({force: true})
     console.log('Connection has been established successfully.');
     app.listen(app.get('PORT'));
 
