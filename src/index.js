@@ -3,7 +3,8 @@ import { sequelize } from "./db/db.js";
 
 
 // import models
-import './models/Users.js'
+import './models/Users.js';
+import './utils/conectionsDB.js';
 
 
 try {

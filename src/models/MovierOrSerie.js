@@ -2,7 +2,7 @@ import {sequelize} from '../db/db.js';
 import {DataTypes} from 'sequelize';
 
 
-export const MovieOrSerie = new sequelize.define('MoviesOrSeries', {
+export const MovieOrSerie = sequelize.define('MoviesOrSeries', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
