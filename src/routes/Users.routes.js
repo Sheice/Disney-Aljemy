@@ -3,11 +3,13 @@ import { Router } from "express";
 const router = Router();
 
 // // import controllers
-import {registerUser} from '../controllers/users.controllers.js';
+import {registerUser, loginUser} from '../controllers/users.controllers.js';
 
 // // register
 
 router.post('/register', registerUser);
+
+router.post('/login', loginUser);
 
 // login
 

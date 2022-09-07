@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
 // routes
-app.use('/auth', usersRouter);
+app.use('/api/auth', usersRouter);
 
 
 export default app;

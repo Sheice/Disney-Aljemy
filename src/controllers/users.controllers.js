@@ -8,7 +8,7 @@ export const registerUser = async (req, res) => {
     const {name, email, password, confirmPassword} = req.body;
 
     // validate if the inputs are empty
-    if(name.length === 0 || email.length === 0 || password.length === 0 || confirmPassword.length === 0 ){
+    if(!name || !email || !password || !confirmPassword || name.length === 0 || email.length === 0 || password.length === 0 || confirmPassword.length === 0 ){
         return res.status(400).json({msg: 'Complete all of inputs'});
     }
 
@@ -57,4 +57,36 @@ export const registerUser = async (req, res) => {
     })
 
     return res.json({user: saveUser, token, msg: 'Register completed, check your email pls'});
+}
+
+
+// login
+
+
+export const loginUser = async (req, res) => {
+    const {email, password} = req.body;
+
+    console.log(email, password);
+
+    if(!email || !password || email.length === 0 || password.length === 0) {
+        return res.status(400).json({msg: 'Complete all of inputs'})
+    }
+
+    const userFound = await User.findOne({where: {email: email}});
+
+    if(!userFound) {
+        return res.json({msg:`The user doesn't  exist`})
+    } 
+
+    const checkPassword = await comparePassword(password, userFound.password);
+    
+    if(!checkPassword) {
+        return res.status(400).json({msg: `Password incorrect`});
+    }
+
+    const token = jwt.sign({id: userFound.id}, process.env.PASSWORD_TOKEN,{
+        expiresIn: 60 * 60 *24  // 24 hours
+    });
+
+    res.json({token, msg: 'Logged correctly '});
 }
