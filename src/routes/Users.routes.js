@@ -2,10 +2,10 @@ import { Router } from "express";
 
 const router = Router();
 
-// import controllers
+// // import controllers
 import {registerUser} from '../controllers/users.controllers.js';
 
-// register
+// // register
 
 router.post('/register', registerUser);
 

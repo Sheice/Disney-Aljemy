@@ -7,6 +7,6 @@ export const sendEmail = async (msg) => {
         await sgMail.send(msg);
         console.log(`Msg to email Sent succesfully!`)
     } catch (error) {
-        return res.status(500).json({msg: error.error});
+        return error.error
     }
 }
