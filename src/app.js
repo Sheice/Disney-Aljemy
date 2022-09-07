@@ -11,6 +11,7 @@ const app = express();
 
 // import routes
 import usersRouter from './routes/Users.routes.js';
+import characterRouter from './routes/Characters.routes.js';
 
 // settings
 app.set('PORT', process.env.PORT || 4000);
@@ -23,6 +24,7 @@ app.use(morgan('dev'));
 
 // routes
 app.use('/api/auth', usersRouter);
+app.use('/api/characters',characterRouter);
 
 
 export default app;
