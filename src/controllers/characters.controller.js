@@ -137,7 +137,7 @@ export const updateCharacter = async (req, res) => {
         characterEdited.set(req.body);
         await characterEdited.save();
 
-        await characterWithMovie.addMovieOrSerie(movie, { through: { selfGranted: false } });
+        await characterEdited.addMovieOrSerie(movie, { through: { selfGranted: false } });
         return res.json({characterEdited, msg:'Character edited'});
 }
 }

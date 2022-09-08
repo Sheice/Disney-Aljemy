@@ -97,3 +97,53 @@ export const createMovie = async (req, res) => {
     }
 
 }
+
+// UPDATE MOVIE
+
+export const updateMovie = async (req, res) => {
+    const {title, creation, calification, characterId} = req.body;
+    const {id} = req.params;
+
+    if(!title || !creation || !calification || title.lenght === 0 || creation.lenght === 0 || calification.lenght === 0 ) {
+        return res.status(400).json({msg: 'complete all of input'});
+        
+    }
+
+    const calificationInt = parseInt(calification);
+    const typeOfCalification = typeof(weightFloat);
+
+    if(typeOfCalification !== 'number' ) {
+        return res.status(400).json({msg:'only numbers in calification'});
+    }
+
+    if(calification < 0 || calification > 5) {
+        return res.status(400).json({msg: 'rang of calification 1 to 5'});
+    }
+
+    if(characterId !== undefined) {
+
+        const character =   await Character.findOne({where: {id: characterId}});
+    
+            // if doesn't found character associated
+        if(character === null) { 
+            
+            const movieEdited = await  MovieOrSerie.findByPk(id);
+            movieEdited.set(req.body);
+            await movieEdited.save();
+    
+            return res.json({characterEdited, msg:'Character edited'});
+            
+        }
+        // if found movie associated
+               
+           
+    
+        const movieEdited = await  MovieOrSerie.findByPk(id);
+        movieEdited.set(req.body);
+        await movieEdited.save();
+
+
+        await movieEdited.addMovieOrSerie(character, { through: { selfGranted: false } });
+        return res.json({movieEdited, msg:'Character edited'});
+}
+}
