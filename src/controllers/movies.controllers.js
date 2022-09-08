@@ -147,3 +147,36 @@ export const updateMovie = async (req, res) => {
         return res.json({movieEdited, msg:'Character edited'});
 }
 }
+
+// DELETE MOVIE
+
+export const deleteMovie = async (req, res) => {
+    const {id} = req.params;
+
+   try {
+    const movieDeleted = await MovieOrSerie.destroy({where: {id}});
+    const destroyCloduImage = await destroyImage(movieDeleted.imagePublicId);
+    res.status(204);
+
+   } catch (error) {
+    res.status(500).json({msg: error.message})
+   }
+
+   
+}
+
+// GET ONE Movie
+
+export const  getOneMovie = async (req, res) => {
+    const {id} = req.params;
+
+    try {
+        const movieFound = await MovieOrSerie.findOne({
+            where: {id: id},
+            include: Character
+        })
+        res.json({movie: movieFound});
+    } catch (error) {
+        res.status(500).json({msg: error.message})
+    }
+}

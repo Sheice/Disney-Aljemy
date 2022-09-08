@@ -10,7 +10,10 @@ export const Gender = sequelize.define('Gender', {
     name: {
         type: DataTypes.STRING
     },
-    image: {
+    imageUrl: {
+        type: DataTypes.STRING
+    },
+    imagePublicId: {
         type: DataTypes.STRING
     }
 });

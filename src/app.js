@@ -14,6 +14,8 @@ const app = express();
 import usersRouter from './routes/Users.routes.js';
 import characterRouter from './routes/Characters.routes.js';
 import moviesRouter from './routes/Movies.routes.js';
+import genderRouter from './routes/Gender.routes.js';
+
 
 // settings
 app.set('PORT', process.env.PORT || 4000);
@@ -32,6 +34,7 @@ app.use(fileUpload({
 app.use('/api/auth', usersRouter);
 app.use('/api/characters',characterRouter);
 app.use('/api/movies', moviesRouter);
+app.use('/api/gender', genderRouter);
 
 
 export default app;
