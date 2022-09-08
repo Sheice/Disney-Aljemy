@@ -8,7 +8,10 @@ export const MovieOrSerie = sequelize.define('MoviesOrSeries', {
         autoIncrement: true,
         primaryKey: true
     },
-    image: {
+    imageUrl: {
+        type: DataTypes.STRING
+    },
+    imagePublicId: {
         type: DataTypes.STRING
     },
     title: {

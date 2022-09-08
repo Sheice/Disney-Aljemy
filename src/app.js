@@ -2,6 +2,7 @@ import express from "express";
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import fileUpload from 'express-fileupload';
 
 dotenv.config();
 
@@ -21,6 +22,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(morgan('dev'));
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './uploads'
+}));
 
 // routes
 app.use('/api/auth', usersRouter);

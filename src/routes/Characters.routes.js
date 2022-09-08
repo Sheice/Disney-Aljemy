@@ -1,11 +1,12 @@
 import { Router } from "express";
 
 // import controllers
-import {getAll} from '../controllers/characters.controller.js';
+import {getAll, createCharacter} from '../controllers/characters.controller.js';
 
 const router = Router();
 
 router.get('/', getAll);
+router.post('/create', createCharacter);
 
 
 export default router;

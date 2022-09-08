@@ -8,9 +8,13 @@ export const Character = sequelize.define('Characters', {
         autoIncrement: true,
         primaryKey: true
     },
-    image: {
+    imageUrl: {
         type: DataTypes.STRING
     },
+    imagePublicId: {
+        type: DataTypes.STRING
+    }
+    ,
     name: {
         type: DataTypes.STRING
     },
@@ -18,7 +22,7 @@ export const Character = sequelize.define('Characters', {
         type: DataTypes.INTEGER
     },
     weight: {
-        type: DataTypes.FLOAT
+        type: DataTypes.DECIMAL
     },
     history: {
         type: DataTypes.STRING
