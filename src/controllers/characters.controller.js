@@ -139,6 +139,21 @@ export const updateCharacter = async (req, res) => {
 
         await characterWithMovie.addMovieOrSerie(movie, { through: { selfGranted: false } });
         return res.json({characterEdited, msg:'Character edited'});
-
 }
+}
+
+// DELETE CHARACTER
+
+export const delteCharacter = async (req, res) => {
+    const {id} = req.params;
+
+   try {
+    const characterDeleted = await Character.destroy({where: {id}});
+    res.status(204);
+
+   } catch (error) {
+    res.status(500).json({msg: error.message})
+   }
+
+   
 }
