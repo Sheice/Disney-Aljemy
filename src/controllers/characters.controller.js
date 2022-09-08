@@ -3,7 +3,7 @@ import {destroyImage, uploadImage} from '../utils/cloudinary.js';
 import {MovieOrSerie} from '../models/MovierOrSerie.js';
 import fs from 'fs-extra';
 
-// get all charactes
+// GET ALL CHARACTER
 
 export const getAll = async (req, res) => {
 
@@ -12,7 +12,7 @@ export const getAll = async (req, res) => {
     res.json({characters: CharactersFound});
 }
 
-// create character
+// CREATE CHARACTER
 
 export const createCharacter = async (req, res) => {
     const {name, age, history, weight, movieOrSerieId} = req.body;
@@ -88,9 +88,57 @@ export const createCharacter = async (req, res) => {
 
         await fs.unlink(image.tempFilePath);
 
-        await characterWithMovie.addProfile(movieAndSeries, { through: { selfGranted: false } });
+        await characterWithMovie.addMovieOrSerie(movie, { through: { selfGranted: false } });
          return res.json({character: characterWithMovie, msg:'Character created'});
     
     }
 
+}
+
+// EDIT CHARACTER
+
+export const updateCharacter = async (req, res) => {
+    const {name, age, history, weight, movieOrSerieId} = req.body;
+    const {id} = req.params;
+
+    if(!name || !age || !history || !weight || name.lenght === 0 || age.lenght === 0 || history.lenght === 0 || weight.lenght === 0 ) {
+        return res.status(400).json({msg: 'complete all of input'});
+        
+    }
+
+    const weightFloat = parseFloat(weight);
+    const typeOfWeight = typeof(weightFloat);
+    const ageNumber = parseInt(age);
+    const typeOfAge = typeof(ageNumber);
+
+    if(typeOfWeight !== 'number' &&  typeOfAge !== 'number' ) {
+        return res.json('only numbers in weight and age');
+    }
+
+    if(movieOrSerieId !== undefined) {
+
+        const movie =   await MovieOrSerie.findOne({where: {id: movieOrSerieId}});
+    
+            // if doesn't found movie associated
+        if(movie === null) { 
+            
+            const characterEdited = await  Character.findByPk(id);
+            characterEdited.set(req.body);
+            await characterEdited.save();
+    
+            return res.json({characterEdited, msg:'Character edited'});
+            
+        }
+        // if found movie associated
+               
+           
+    
+        const characterEdited = await  Character.findByPk(id);
+        characterEdited.set(req.body);
+        await characterEdited.save();
+
+        await characterWithMovie.addMovieOrSerie(movie, { through: { selfGranted: false } });
+        return res.json({characterEdited, msg:'Character edited'});
+
+}
 }
