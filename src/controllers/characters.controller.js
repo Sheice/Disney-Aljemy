@@ -7,7 +7,7 @@ import fs from 'fs-extra';
 
 export const getAll = async (req, res) => {
 
-    const CharactersFound = await Character.findAll({attributes: ['image', 'name']});
+    const CharactersFound = await Character.findAll({attributes: ['imageUrl', 'name']});
 
     res.json({characters: CharactersFound});
 }

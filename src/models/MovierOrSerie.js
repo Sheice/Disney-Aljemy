@@ -18,7 +18,7 @@ export const MovieOrSerie = sequelize.define('MoviesOrSeries', {
         type: DataTypes.STRING
     },
     creation: {
-        type: DataTypes.INTEGER
+        type: DataTypes.DATE
     },
    calification: {
         type: DataTypes.INTEGER
