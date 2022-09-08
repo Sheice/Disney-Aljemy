@@ -2,6 +2,8 @@ import {Gender} from '../models/Gender.js'
 import {destroyImage, uploadImage} from '../utils/cloudinary.js';
 import fs from 'fs-extra';
 
+// CREATE GENDER
+
 export const  createGender = async (req, res) => {
     const {name} = req.body;
     const image = req.files?.image;
@@ -32,4 +34,21 @@ export const  createGender = async (req, res) => {
 
     await fs.unlink(image.tempFilePath);
     return res.json({gender, msg:'Character created'});
+}
+
+// DELETE GENDER
+
+export const deleteGender = async (req, res) => {
+    const {id} = req.params;
+
+   try {
+    const genderDeleted = await Gender.destroy({where: {id}});
+    const destroyCloduImage = await destroyImage(genderDeleted.imagePublicId);
+    res.status(204);
+
+   } catch (error) {
+    res.status(500).json({msg: error.message})
+   }
+
+   
 }

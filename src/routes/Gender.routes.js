@@ -1,14 +1,12 @@
 import { Router } from "express";
 
 // import controllers
-import {createGender} from '../controllers/gender.controllers.js'
+import {createGender, deleteGender} from '../controllers/gender.controllers.js'
 
 const router = Router();
 
-// router.get('/',);
 router.post('/create', createGender);
-// router.delete('/:id/delete', );
-// router.get('/:id', );
+router.delete('/:id/delete',  deleteGender);
 
 
 export default router;
