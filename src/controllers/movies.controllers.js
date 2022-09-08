@@ -18,7 +18,7 @@ export const getAll = async (req, res) => {
 // CREATE CHARACTER
 
 export const createMovie = async (req, res) => {
-    const {title, creation, calification, characterId} = req.body;
+    const {title, creation, calification, characterId, genderId} = req.body;
 
     const image = req.files?.image;
 
@@ -70,7 +70,8 @@ export const createMovie = async (req, res) => {
             imagePublicId: imageCloud.public_id,
            title,
             creation,
-           calification
+           calification,
+           genderId
         });
 
         await fs.unlink(image.tempFilePath);
@@ -86,7 +87,8 @@ export const createMovie = async (req, res) => {
             imagePublicId: imageCloud.public_id,
            title,
             creation,
-           calification
+           calification,
+           genderId
         });
 
         await fs.unlink(image.tempFilePath);
