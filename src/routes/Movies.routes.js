@@ -1,12 +1,12 @@
 import { Router } from "express";
 
 // import controllers
-import {getAll} from '../controllers/movies.controllers.js';
+import {getAll, createMovie} from '../controllers/movies.controllers.js';
 
 const router = Router();
 
 router.get('/', getAll);
-router.post('/create');
+router.post('/create', createMovie);
 router.put('/:id/edit');
 router.delete('/:id/delete');
 router.get('/:id');
