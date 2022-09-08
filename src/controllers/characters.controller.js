@@ -149,6 +149,7 @@ export const delteCharacter = async (req, res) => {
 
    try {
     const characterDeleted = await Character.destroy({where: {id}});
+    const destroyCloduImage = await destroyImage(characterDeleted.imagePublicId);
     res.status(204);
 
    } catch (error) {
@@ -164,7 +165,10 @@ export const  getOneCharacter = async (req, res) => {
     const {id} = req.params;
 
     try {
-        const characterFound = await Character.findByPk(id);
+        const characterFound = await Character.findOne({
+            where: {id: id},
+            include: MovieOrSerie
+        })
         res.json({character: characterFound});
     } catch (error) {
         res.status(500).json({msg: error.message})
