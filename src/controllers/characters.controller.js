@@ -157,3 +157,16 @@ export const delteCharacter = async (req, res) => {
 
    
 }
+
+// GET ONE CHARACTER
+
+export const  getOneCharacter = async (req, res) => {
+    const {id} = req.params;
+
+    try {
+        const characterFound = await Character.findByPk(id);
+        res.json({character: characterFound});
+    } catch (error) {
+        res.status(500).json({msg: error.message})
+    }
+}
