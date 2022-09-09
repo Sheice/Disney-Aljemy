@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "357599af-1f22-431b-84c7-7692c2c958d7",
+		"name": "Gender",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16998316"
+	},
+	"item": [
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/jazie/OneDrive/Escritorio/chucky.jpg"
+						},
+						{
+							"key": "name",
+							"value": "terror",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/gender/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"gender",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/gender/3/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"gender",
+						"3",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "LA MEJOR PELI DE TERROR",
+							"disabled": true
+						},
+						{
+							"key": "creation",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

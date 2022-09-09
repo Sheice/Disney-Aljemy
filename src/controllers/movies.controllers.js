@@ -56,7 +56,7 @@ export const getAll = async (req, res) => {
   res.json({ movies: moviesFound });
 };
 
-// CREATE MOVIE * I cant't add a lot of character to movie
+// CREATE MOVIE * I cant't add a lot of character to movie, then the genderid and creaton i cant put inside of movie because i had fixed the bugs i'm sorry
 
 export const createMovie = async (req, res) => {
   const { title, creation, calification, characterId, genderId } = req.body;
@@ -101,78 +101,79 @@ export const createMovie = async (req, res) => {
     await fs.unlink(image.tempFilePath);
     return res.status(400).json({ msg: "rang of calification 1 to 5" });
   }
-  
 
   // // search all characters or serie of this character
   if (characterId !== undefined) {
-    const characterFound = await Character.findOne({ where: { id: characterId } });
+    const characterFound = await Character.findOne({
+      where: { id: characterId },
+    });
 
     // if doesn't found character associated
     if (characterFound === null) {
-      
       try {
         const imageCloud = await uploadImage(image.tempFilePath);
         const movieWithCharacter = await MovieOrSerie.create({
-         genderId,
+          //  genderId,
           imageUrl: imageCloud.url,
           imagePublicId: imageCloud.public_id,
           title,
           // creation,
           calification,
-        }, {
-          include: Gender
         });
-  
+
         await fs.unlink(image.tempFilePath);
         return res.json({ movie: movieWithCharacter, msg: "Movie created" });
       } catch (error) {
-        res.status(500).json({msg: error.message})
+        res.status(500).json({ msg: error.message });
       }
     }
     // if found movie associated
-    
-   try {
-    const imageCloud = await uploadImage(image.tempFilePath);
-    const movieWithCharacter = await MovieOrSerie.create({
-      genderId,
-      imageUrl: imageCloud.url,
-      imagePublicId: imageCloud.public_id,
-      title,
-      // creation,
-      calification,
-      Characters: [{
-        imageUrl: characterFound.imageUrl,
-        imagePublicId: characterFound. imagePublicId,
-        name: characterFound.name,
-        age: characterFound.age,
-        weight: characterFound.weight,
-        history: characterFound.history,
-        character_movieOrSerie: {
-          selfGranted: true
-        }
-      }]
-    }, {
-      include: [Character, Gender]
-    });
 
-    await fs.unlink(image.tempFilePath);
-    return res.json({movie: movieWithCharacter, msg: "movie created" });
-   } catch (error) {
-    res.status(500).json({msg: error.message})
-   }
+    try {
+      const imageCloud = await uploadImage(image.tempFilePath);
+      const movieWithCharacter = await MovieOrSerie.create(
+        {
+          // genderId,
+          imageUrl: imageCloud.url,
+          imagePublicId: imageCloud.public_id,
+          title,
+          // creation,
+          calification,
+          Characters: [
+            {
+              imageUrl: characterFound.imageUrl,
+              imagePublicId: characterFound.imagePublicId,
+              name: characterFound.name,
+              age: characterFound.age,
+              weight: characterFound.weight,
+              history: characterFound.history,
+              character_movieOrSerie: {
+                selfGranted: true,
+              },
+            },
+          ],
+        },
+        {
+          include: Character,
+        }
+      );
+
+      await fs.unlink(image.tempFilePath);
+      return res.json({ movie: movieWithCharacter, msg: "movie created" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
   }
   // if there isn't characterId
   const imageCloud = await uploadImage(image.tempFilePath);
   try {
     const movieWithCharacter = await MovieOrSerie.create({
-       genderId: genderNumb,
+      //  genderId,
       imageUrl: imageCloud.url,
       imagePublicId: imageCloud.public_id,
       title,
       // creation,
       calification,
-    }, {
-      include:Gender
     });
     await fs.unlink(image.tempFilePath);
     return res.json({ movie: movieWithCharacter, msg: "Movie created" });

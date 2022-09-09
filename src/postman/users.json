@@ -1,0 +1,92 @@
+{
+	"info": {
+		"_postman_id": "5233dde5-3a98-483c-935a-6948413a1d2d",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16998316"
+	},
+	"item": [
+		{
+			"name": "register users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Juancin",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "juancinn@gmail.comd",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Juancin",
+							"type": "text"
+						},
+						{
+							"key": "confirmPassword",
+							"value": "Juancin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "juancinn@gmail.comd",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Juancin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
