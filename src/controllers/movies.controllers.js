@@ -3,6 +3,7 @@ import { destroyImage, uploadImage } from "../utils/cloudinary.js";
 import { MovieOrSerie } from "../models/MovierOrSerie.js";
 import fs from "fs-extra";
 import { Op } from "sequelize";
+import { Gender } from "../models/Gender.js";
 
 // GET ALL Movies
 
@@ -100,6 +101,7 @@ export const createMovie = async (req, res) => {
     await fs.unlink(image.tempFilePath);
     return res.status(400).json({ msg: "rang of calification 1 to 5" });
   }
+  
 
   // // search all characters or serie of this character
   if (characterId !== undefined) {
@@ -111,12 +113,14 @@ export const createMovie = async (req, res) => {
       try {
         const imageCloud = await uploadImage(image.tempFilePath);
         const movieWithCharacter = await MovieOrSerie.create({
+         genderId,
           imageUrl: imageCloud.url,
           imagePublicId: imageCloud.public_id,
           title,
           // creation,
           calification,
-          genderId
+        }, {
+          include: Gender
         });
   
         await fs.unlink(image.tempFilePath);
@@ -130,12 +134,12 @@ export const createMovie = async (req, res) => {
    try {
     const imageCloud = await uploadImage(image.tempFilePath);
     const movieWithCharacter = await MovieOrSerie.create({
+      genderId,
       imageUrl: imageCloud.url,
       imagePublicId: imageCloud.public_id,
       title,
       // creation,
       calification,
-    genderId,
       Characters: [{
         imageUrl: characterFound.imageUrl,
         imagePublicId: characterFound. imagePublicId,
@@ -148,7 +152,7 @@ export const createMovie = async (req, res) => {
         }
       }]
     }, {
-      include: Character
+      include: [Character, Gender]
     });
 
     await fs.unlink(image.tempFilePath);
@@ -161,12 +165,14 @@ export const createMovie = async (req, res) => {
   const imageCloud = await uploadImage(image.tempFilePath);
   try {
     const movieWithCharacter = await MovieOrSerie.create({
+       genderId: genderNumb,
       imageUrl: imageCloud.url,
       imagePublicId: imageCloud.public_id,
       title,
-      genderId,
       // creation,
       calification,
+    }, {
+      include:Gender
     });
     await fs.unlink(image.tempFilePath);
     return res.json({ movie: movieWithCharacter, msg: "Movie created" });

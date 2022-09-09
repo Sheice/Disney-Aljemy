@@ -7,11 +7,13 @@ import { MovieOrSerie } from "../models/MovierOrSerie.js";
 // gender has many movies Or series
 Gender.hasMany(MovieOrSerie, {
   foreignKey: "genderId",
-
+  sourceKey: 'id'
 });
 
-MovieOrSerie.belongsTo(Gender, {
-  foreignKey:"fenderId"
+MovieOrSerie.belongsTo(Gender,{
+  foreignKey: "genderId",
+  targetId: 'id'
+
 });
 
 // many characters has many movie or serie and vice versa
